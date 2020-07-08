@@ -1,7 +1,7 @@
-package com.cdha.rlpiss.wx.wxservice.wxservice.config;
+package com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.config;
 
 import com.alibaba.fastjson.JSON;
-import com.cdha.rlpiss.wx.wxservice.wxservice.hander.gm.GmManagerException;
+import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.hander.gm.GmManagerException;
 import com.cdha.wechatsub.wxtools.modle.MyOrder;
 import com.cdha.wechatsub.wxtools.modle.TestUserBean;
 import com.cdha.wechatsub.wxtools.util.MyBase64Util.MyBase64Helper;
