@@ -1,0 +1,36 @@
+Manifest-Version: 1.0
+Class-Path: spring-tx-5.0.5.RELEASE.jar jul-to-slf4j-1.7.25.jar snakey
+ aml-1.19.jar spring-boot-starter-logging-2.0.1.RELEASE.jar logback-co
+ re-1.2.3.jar httpclient-4.5.5.jar httpmime-4.5.5.jar xstream-1.4.7.ja
+ r spring-boot-starter-json-2.0.1.RELEASE.jar spring-jcl-5.0.5.RELEASE
+ .jar jackson-mapper-asl-1.9.13.jar log4j-to-slf4j-2.10.0.jar thymelea
+ f-spring5-3.0.9.RELEASE.jar jackson-core-asl-1.9.13.jar spring-contex
+ t-support-5.0.5.RELEASE.jar json-20160810.jar gson-2.8.2.jar unbescap
+ e-1.1.5.RELEASE.jar thumbnailator-0.4.8.jar HikariCP-2.7.8.jar spring
+ -jdbc-5.0.5.RELEASE.jar spring-boot-starter-2.0.1.RELEASE.jar mybatis
+ -spring-1.3.0.jar slf4j-api-1.7.25.jar commons-io-2.4.jar spring-bean
+ s-5.0.5.RELEASE.jar xmlpull-1.1.3.1.jar log4j-1.2.17.jar logback-clas
+ sic-1.2.3.jar commons-lang3-3.7.jar mybatis-spring-boot-autoconfigure
+ -1.1.1.jar spring-aop-5.0.5.RELEASE.jar spring-web-5.0.5.RELEASE.jar 
+ spring-boot-starter-thymeleaf-2.0.1.RELEASE.jar xpp3_min-1.1.4c.jar q
+ uartz-2.3.0.jar spring-context-5.0.5.RELEASE.jar tomcat-embed-websock
+ et-8.5.29.jar javax.annotation-api-1.3.2.jar jackson-annotations-2.9.
+ 0.jar jstl-1.2.jar thymeleaf-extras-java8time-3.0.1.RELEASE.jar tomca
+ t-embed-core-8.5.29.jar spring-boot-starter-quartz-2.0.1.RELEASE.jar 
+ xmlunit-core-2.5.1.jar jackson-databind-2.9.5.jar java-sdk-4.10.0.jar
+  spring-boot-starter-jdbc-2.0.1.RELEASE.jar spring-boot-starter-web-2
+ .0.1.RELEASE.jar tomcat-embed-el-8.5.29.jar mybatis-spring-boot-start
+ er-1.1.1.jar spring-boot-2.0.1.RELEASE.jar spring-boot-starter-tomcat
+ -2.0.1.RELEASE.jar lombok-1.16.20.jar jackson-module-parameter-names-
+ 2.9.5.jar thymeleaf-3.0.9.RELEASE.jar jackson-datatype-jsr310-2.9.5.j
+ ar jackson-core-2.9.5.jar hibernate-validator-6.0.9.Final.jar jackson
+ -datatype-jdk8-2.9.5.jar spring-core-5.0.5.RELEASE.jar mchange-common
+ s-java-0.2.11.jar validation-api-2.0.1.Final.jar httpcore-4.4.9.jar m
+ ybatis-3.4.0.jar log4j-api-2.10.0.jar attoparser-2.0.4.RELEASE.jar sp
+ ring-boot-autoconfigure-2.0.1.RELEASE.jar classmate-1.3.4.jar zhenzis
+ ms-1.0.1.jar spring-webmvc-5.0.5.RELEASE.jar commons-codec-1.11.jar j
+ boss-logging-3.3.2.Final.jar ojdbc6-11.2.0.1.0.jar spring-expression-
+ 5.0.5.RELEASE.jar
+Main-Class: com.cdha.rlpiss.wx.wxservice.wxservice.WxServiceApplicatio
+ n
+

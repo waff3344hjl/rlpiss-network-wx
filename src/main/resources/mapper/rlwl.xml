@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.dao.IYCNRlUserDao">
+    <resultMap id="BaseResultMap" type="com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.user.User">
+        <id column="YHID" property="yhid" jdbcType="VARCHAR"/>
+        <result column="YHXM" property="yhxm" jdbcType="VARCHAR"/>
+        <result column="SJH" property="sjh" jdbcType="VARCHAR"/>
+        <result column="ZJH" property="zjh" jdbcType="VARCHAR"/>
+        <result column="YX" property="yx" jdbcType="VARCHAR"/>
+        <result column="SFZH" property="sfzh" jdbcType="VARCHAR"/>
+        <result column="TXDZ" property="txdz" jdbcType="VARCHAR"/>
+        <result column="DLMM" property="dlmm" jdbcType="VARCHAR"/>
+        <result column="YHLX" property="yhlx" jdbcType="CHAR"/>
+        <result column="ZCSJ" property="zcsj" jdbcType="TIMESTAMP"/>
+        <result column="WXOPENID" property="wxopenid" jdbcType="VARCHAR"/>
+        <result column="SFHR" property="sfhr" jdbcType="VARCHAR"/>
+        <result column="DXYZM" property="dxyzm" jdbcType="VARCHAR"/>
+        <result column="DXYXSJ" property="dxyxsj" jdbcType="TIMESTAMP"/>
+        <result column="CYCZ" property="cycz" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    YHID, YHXM, SJH, ZJH, YX, SFZH, TXDZ, DLMM, YHLX, ZCSJ, WXOPENID, SFHR,DXYZM,DXYXSJ,CYCZ
+  </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TD_RL_HYXX
+        where YHID = #{yhid,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPhoneNum" resultMap="BaseResultMap" parameterType="com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.user.User">
+        select
+        <include refid="Base_Column_List"/>
+        from TD_RL_HYXX
+        where
+        SJH = #{sjh,jdbcType=VARCHAR}
+        <if test="wxopenid != null ">
+            OR
+            WXOPENID = #{wxopenid,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="selectByIdentityNum" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TD_RL_HYXX
+        where SFZH = #{sfzh,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TD_RL_HYXX
+        where YX = #{yx,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPoneNumAndPwd" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TD_RL_HYXX
+        where SJH = #{sjh,jdbcType=VARCHAR} and DLMM=#{dlmm,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPoneNumAndType" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TD_RL_HYXX
+        where SJH = #{sjh,jdbcType=VARCHAR} and YHLX=#{yhlx,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPoneNumAndText" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TD_RL_HYXX
+        where SJH = #{sjh,jdbcType=VARCHAR} and DXYZM=#{dxyzm,jdbcType=VARCHAR} and DXYXSJ>=(select SYSDATE from dual)
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TD_RL_HYXX
+    where YHID = #{yhid,jdbcType=VARCHAR}
+  </delete>
+
+    <insert id="insert" parameterType="com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.user.User">
+        insert into TD_RL_HYXX
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            YHID,
+            <if test="yhxm != null">
+                YHXM,
+            </if>
+            <if test="sjh != null">
+                SJH,
+            </if>
+            <if test="zjh != null">
+                ZJH,
+            </if>
+            <if test="yx != null">
+                YX,
+            </if>
+            <if test="sfzh != null">
+                SFZH,
+            </if>
+            <if test="txdz != null">
+                TXDZ,
+            </if>
+            <if test="sjh != null">
+                DLMM,
+            </if>
+            <if test="yhlx != null">
+                YHLX,
+            </if>
+
+            ZCSJ,
+
+            <if test="wxopenid != null">
+                WXOPENID,
+            </if>
+            <if test="sfhr != null">
+                SFHR,
+            </if>
+            <if test="cycz != null">
+                CYCZ
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            SYS_GUID(),
+
+            <if test="yhxm != null">
+                #{yhxm,jdbcType=VARCHAR},
+            </if>
+            <if test="sjh != null">
+                #{sjh,jdbcType=VARCHAR},
+            </if>
+            <if test="zjh != null">
+                #{zjh,jdbcType=VARCHAR},
+            </if>
+            <if test="yx != null">
+                #{yx,jdbcType=VARCHAR},
+            </if>
+            <if test="sfzh != null">
+                #{sfzh,jdbcType=VARCHAR},
+            </if>
+            <if test="txdz != null">
+                #{txdz,jdbcType=VARCHAR},
+            </if>
+            <if test="sjh != null">
+                #{sjh,jdbcType=VARCHAR},
+            </if>
+            <if test="yhlx != null">
+                #{yhlx,jdbcType=CHAR},
+            </if>
+
+            sysdate,
+
+            <if test="wxopenid != null">
+                #{wxopenid,jdbcType=VARCHAR},
+            </if>
+            <if test="sfhr != null">
+                #{sfhr,jdbcType=VARCHAR},
+            </if>
+            <if test="cycz != null">
+                #{cycz,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.user.User">
+    update TD_RL_HYXX
+    set YHXM = #{yhxm,jdbcType=VARCHAR},
+      SJH = #{sjh,jdbcType=VARCHAR},
+      ZJH = #{zjh,jdbcType=VARCHAR},
+      YX = #{yx,jdbcType=VARCHAR},
+      SFZH = #{sfzh,jdbcType=VARCHAR},
+      TXDZ = #{txdz,jdbcType=VARCHAR},
+      DLMM = #{dlmm,jdbcType=VARCHAR},
+      YHLX = #{yhlx,jdbcType=CHAR},
+      ZCSJ = #{zcsj,jdbcType=TIMESTAMP},
+      WXOPENID = #{wxopenid,jdbcType=VARCHAR},
+      SFHR = #{sfhr,jdbcType=VARCHAR},
+    where YHID = #{yhid,jdbcType=VARCHAR}
+  </update>
+
+    <update id="updateDxBySjh" parameterType="java.lang.String">
+    update TD_RL_HYXX
+    set DXYZM = #{dxyzm,jdbcType=VARCHAR},
+      DXYXSJ = sysdate+5/24/60
+    where sjh = #{sjh,jdbcType=VARCHAR}
+  </update>
+</mapper>

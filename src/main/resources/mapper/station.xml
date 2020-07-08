@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.dao.IYCNRLStationDao">
+    <resultMap id="BaseResultMap" type="com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.station.StationInfo">
+        <id column="STATION_ID" property="stationId" jdbcType="VARCHAR"/>
+        <result column="STATION_NAME" property="stationName" jdbcType="VARCHAR"/>
+        <result column="STATION_DBM" property="stationDbm" jdbcType="VARCHAR"/>
+        <result column="STATION_TMS" property="stationTms" jdbcType="VARCHAR"/>
+        <result column="STATION_JDM" property="stationJdm" jdbcType="VARCHAR"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    STATION_ID, STATION_NAME, STATION_DBM, STATION_TMS, STATION_JDM
+  </sql>
+
+    <select id="selectStations" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TD_RL_SATION
+        t
+    </select>
+
+    <select id="selectCzByZm" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TD_RL_SATION
+        where STATION_NAME = #{stationName} or STATION_DBM = #{stationName} or STATION_TMS = #{stationName}
+    </select>
+
+    <select id="selectCzByJDM" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TD_RL_SATION
+        where STATION_JDM = #{jdm}
+    </select>
+</mapper>

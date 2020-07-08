@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.dao.IzhwlUrlDao">
+    <resultMap id="BaseResultMap" type="com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.zhwl.ZxwlURL">
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="ZMZTYBM" property="dbm" jdbcType="VARCHAR"/>
+        <result column="ZMZCZMC" property="zm" jdbcType="VARCHAR"/>
+        <result column="ZMZCTMS" property="tms" jdbcType="VARCHAR"/>
+        <result column="JDM" property="jdm" jdbcType="VARCHAR"/>
+        <result column="WL_URL" property="wlUrl" jdbcType="VARCHAR"/>
+        <result column="JSQ_URL" property="jsqUrl" jdbcType="VARCHAR"/>
+        <result column="HYZ_URL" property="hyzUrl" jdbcType="VARCHAR"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, ZMZTYBM, ZMZCZMC, ZMZCTMS, JDM ,WL_URL ,JSQ_URL,HYZ_URL
+  </sql>
+
+    <select id="getAllUrls" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from ZHWL_RUL_SAT
+        t
+    </select>
+
+
+</mapper>
