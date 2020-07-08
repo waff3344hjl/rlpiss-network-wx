@@ -1,0 +1,1042 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="微信,WeUI,示例,案例">
+<meta name="description" content="WeUI 为微信 Web 服务量身设计">
+<title> 货物交付完成</title>
+
+<script th:src="@{../wx/js/jquery.min.js}"></script>
+<script th:src="@{../wx/js/mybaseurl.js}"></script>
+<script th:src="@{../wx/js/jfwc.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{../wx/css/weui.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{../wx/css/example.css}">
+<link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.3/style/weui.min.css">
+<link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/0.4.2/weui.min.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
+<style type="text/css">
+    #__vconsole {
+        font-size: 13px
+    }
+
+    #__vconsole .vc-switch {
+        display: block;
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+        color: #fff;
+        background-color: #04be02;
+        line-height: 1;
+        font-size: 14px;
+        padding: 8px 16px;
+        z-index: 10000;
+        border-radius: 4px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, .4)
+    }
+
+    #__vconsole .vc-mask {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: transparent;
+        z-index: 10001;
+        transition: background .3s;
+        -webkit-tap-highlight-color: transparent
+    }
+
+    #__vconsole .vc-panel {
+        position: fixed;
+        min-height: 80%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10002;
+        background-color: #efeff4;
+        -webkit-transition: -webkit-transform .3s;
+        transition: -webkit-transform .3s;
+        transition: transform .3s;
+        transition: transform .3s, -webkit-transform .3s;
+        -webkit-transform: translateY(100%);
+        transform: translateY(100%)
+    }
+
+    #__vconsole .vc-tabbar {
+        border-bottom: 1px solid #d9d9d9;
+        overflow: hidden
+    }
+
+    #__vconsole .vc-tabbar .vc-tab {
+        float: left;
+        line-height: 39px;
+        padding: 0 15px;
+        border-right: 1px solid #d9d9d9;
+        text-decoration: none;
+        color: #000;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none
+    }
+
+    #__vconsole .vc-tabbar .vc-tab:active {
+        background-color: rgba(0, 0, 0, .15)
+    }
+
+    #__vconsole .vc-tabbar .vc-tab.vc-actived {
+        background-color: #fff
+    }
+
+    #__vconsole .vc-content {
+        background-color: #fff;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        position: absolute;
+        top: 40px;
+        left: 0;
+        right: 0;
+        bottom: 40px;
+        -webkit-overflow-scrolling: touch
+    }
+
+    #__vconsole .vc-logbox {
+        display: none;
+        position: relative;
+        height: 100%
+    }
+
+    #__vconsole .vc-logbox i {
+        font-style: normal
+    }
+
+    #__vconsole .vc-logbox .vc-log {
+        -webkit-tap-highlight-color: transparent
+    }
+
+    #__vconsole .vc-logbox .vc-log:empty:before {
+        content: "No log";
+        color: #999;
+        position: absolute;
+        top: 45%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        font-size: 15px;
+        text-align: center
+    }
+
+    #__vconsole .vc-logbox .vc-item {
+        margin: 0;
+        padding: 6px 8px;
+        line-height: 1.3;
+        border-bottom: 1px solid #eee;
+        word-break: break-word
+    }
+
+    #__vconsole .vc-logbox .vc-item-info {
+        color: #6a5acd
+    }
+
+    #__vconsole .vc-logbox .vc-item-debug {
+        color: #daa520
+    }
+
+    #__vconsole .vc-logbox .vc-item-warn {
+        color: orange;
+        border-color: #ffb930;
+        background-color: #fffacd
+    }
+
+    #__vconsole .vc-logbox .vc-item-error {
+        color: #dc143c;
+        border-color: #f4a0ab;
+        background-color: #ffe4e1
+    }
+
+    #__vconsole .vc-logbox .vc-item .vc-fold {
+        display: block;
+        max-height: 300px;
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch
+    }
+
+    #__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-outer {
+        display: block;
+        font-style: italic
+    }
+
+    #__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-outer:active {
+        background-color: rgba(0, 0, 0, .15)
+    }
+
+    #__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-outer {
+        padding-left: 10px;
+        position: relative
+    }
+
+    #__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-outer:before {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 2px;
+        width: 0;
+        height: 0;
+        border: 4px solid transparent;
+        border-left-color: #000
+    }
+
+    #__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-inner {
+        display: none
+    }
+
+    #__vconsole .vc-logbox .vc-item .vc-fold.vc-toggle .vc-fold-outer:before {
+        top: 6px;
+        left: 0;
+        border-top-color: #000;
+        border-left-color: transparent
+    }
+
+    #__vconsole .vc-logbox .vc-item .vc-fold.vc-toggle .vc-fold-inner {
+        display: block
+    }
+
+    #__vconsole .vc-logbox .vc-code-key {
+        color: #905
+    }
+
+    #__vconsole .vc-logbox .vc-code-number {
+        color: #0086b3
+    }
+
+    #__vconsole .vc-logbox .vc-code-string {
+        color: #183691
+    }
+
+    #__vconsole .vc-logbox.vc-actived {
+        display: block
+    }
+
+    #__vconsole .vc-toolbar {
+        border-top: 1px solid #d9d9d9;
+        line-height: 39px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden
+    }
+
+    #__vconsole .vc-toolbar .vc-tool {
+        text-decoration: none;
+        color: #000;
+        width: 50%;
+        float: left;
+        text-align: center;
+        position: relative;
+        -webkit-touch-callout: none
+    }
+
+    #__vconsole .vc-toolbar .vc-tool:after {
+        content: " ";
+        position: absolute;
+        top: 7px;
+        bottom: 7px;
+        right: 0;
+        border-left: 1px solid #d9d9d9
+    }
+
+    #__vconsole .vc-toolbar .vc-tool-last:after {
+        border: none
+    }
+
+    #__vconsole.vc-toggle .vc-switch {
+        display: none
+    }
+
+    #__vconsole.vc-toggle .vc-mask {
+        background: rgba(0, 0, 0, .6);
+        display: block
+    }
+
+    #__vconsole.vc-toggle .vc-panel {
+        -webkit-transform: translate(0);
+        transform: translate(0)
+    }</style>
+<style type="text/css">body {
+    background-color: #efeff4
+}</style>
+<style type="text/css">.weui_avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 4px;
+    vertical-align: middle
+}</style>
+<style type="text/css"></style>
+<style type="text/css">.swiper, .swiper-wrapper {
+    overflow: hidden
+}
+
+.swiper {
+    height: 200px;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease
+}
+
+.item {
+    height: 100%;
+    background-position: 50%;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    float: left
+}
+
+.item.active .animated {
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    opacity: 1
+}
+
+.item:not(.active) .animated {
+    -webkit-animation: none;
+    animation: none;
+    opacity: 0
+}</style>
+<style type="text/css">.weui_cells_checkbox > .weui_cell > *, .weui_cells_radio > .weui_cell > * {
+    pointer-events: none
+}</style>
+<style type="text/css"></style>
+<style type="text/css">.weui_panel {
+    margin-top: 0
+}
+
+.weui_pull {
+    -webkit-transform: translate3d(0, -40px, 0);
+    transform: translate3d(0, -40px, 0)
+}
+
+.weui_pull_tips {
+    text-align: center;
+    font-size: 12px;
+    padding: 10px;
+    color: #888
+}
+
+.weui_pull_loading {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: -4px;
+    -webkit-animation: loadingAnimation 1s steps(12) infinite;
+    animation: loadingAnimation 1s steps(12) infinite;
+    background: transparent url(data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iciIgd2lkdGg9JzEyMHB4JyBoZWlnaHQ9JzEyMHB4JyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSJub25lIiBjbGFzcz0iYmsiPjwvcmVjdD4KICAgIDxyZWN0IHg9JzQ2LjUnIHk9JzQwJyB3aWR0aD0nNycgaGVpZ2h0PScyMCcgcng9JzUnIHJ5PSc1JyBmaWxsPScjRTlFOUU5JwogICAgICAgICAgdHJhbnNmb3JtPSdyb3RhdGUoMCA1MCA1MCkgdHJhbnNsYXRlKDAgLTMwKSc+CiAgICA8L3JlY3Q+CiAgICA8cmVjdCB4PSc0Ni41JyB5PSc0MCcgd2lkdGg9JzcnIGhlaWdodD0nMjAnIHJ4PSc1JyByeT0nNScgZmlsbD0nIzk4OTY5NycKICAgICAgICAgIHRyYW5zZm9ybT0ncm90YXRlKDMwIDUwIDUwKSB0cmFuc2xhdGUoMCAtMzApJz4KICAgICAgICAgICAgICAgICByZXBlYXRDb3VudD0naW5kZWZpbml0ZScvPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyM5Qjk5OUEnCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSg2MCA1MCA1MCkgdHJhbnNsYXRlKDAgLTMwKSc+CiAgICAgICAgICAgICAgICAgcmVwZWF0Q291bnQ9J2luZGVmaW5pdGUnLz4KICAgIDwvcmVjdD4KICAgIDxyZWN0IHg9JzQ2LjUnIHk9JzQwJyB3aWR0aD0nNycgaGVpZ2h0PScyMCcgcng9JzUnIHJ5PSc1JyBmaWxsPScjQTNBMUEyJwogICAgICAgICAgdHJhbnNmb3JtPSdyb3RhdGUoOTAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyNBQkE5QUEnCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSgxMjAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyNCMkIyQjInCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSgxNTAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyNCQUI4QjknCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSgxODAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyNDMkMwQzEnCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSgyMTAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyNDQkNCQ0InCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSgyNDAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyNEMkQyRDInCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSgyNzAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyNEQURBREEnCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSgzMDAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyNFMkUyRTInCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSgzMzAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0Pgo8L3N2Zz4=) no-repeat;
+    background-size: 100%
+}
+
+@-webkit-keyframes loadingAnimation {
+    0% {
+        -webkit-transform: rotate(0deg)
+    }
+    to {
+        -webkit-transform: rotate(1turn)
+    }
+}
+
+@keyframes loadingAnimation {
+    0% {
+        -webkit-transform: rotate(0deg)
+    }
+    to {
+        -webkit-transform: rotate(1turn)
+    }
+}
+.iconfont {
+
+    font-family:"iconfont" !important;
+
+    font-size:16px;
+
+    font-style:normal;
+
+    -webkit-font-smoothing: antialiased;
+
+    -webkit-text-stroke-width: 0.2px;
+
+    -moz-osx-font-smoothing: grayscale;
+
+}
+
+body{
+
+    font-family: "microsoft yahei";
+
+}
+
+ul,li{
+
+    list-style: none;
+
+    padding:0;
+
+    margin:0;
+
+}
+
+a{
+
+    text-decoration: none;
+
+}
+
+.clearfix:after {
+
+    content: ".";
+
+    display: block;
+
+    height: 0;
+
+    clear: both;
+
+    visibility: hidden;
+
+}
+
+.order-evaluation {
+
+    width: 827px;
+
+    border: 2px solid #E84E40;
+
+    background: #fff;
+
+    z-index: 200;
+
+    margin:50px auto;
+
+}
+
+.order-evaluation{
+
+    padding:22px;
+
+}
+
+.order-evaluation h4{
+
+    font-size:18px;
+
+    color:#333333;
+
+    padding-bottom:20px;
+
+    border-bottom:1px dashed #dbdbdb;
+
+}
+
+.order-evaluation p{
+
+    font-size:14px;
+
+    color:#999;
+
+    line-height:45px;
+
+    margin-bottom:0;
+
+}
+
+.order-evaluation .order-evaluation-text{
+
+    font-size:16px;
+
+    color:#333;
+
+    line-height:40px;
+
+    width:809px;
+
+    padding-left:15px;
+
+    background:#f3f3f3;
+
+    margin-bottom:25px;
+
+    margin-top:20px;
+
+}
+
+.order-evaluation-checkbox ul li{
+
+    width:105px;
+
+    height:43px;
+
+    border:1px solid #e8e8e8;
+
+    text-align: center;
+
+    background: #fff;
+
+    font-size:10px;
+
+    color:#333333;
+
+    line-height:43px;
+
+    margin-right:5px;
+    margin-left: 5px;
+
+    margin-bottom:25px;
+
+    float:left;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    position:relative;
+
+}
+
+.order-evaluation-checkbox ul li.checked i{
+
+    display: block;
+
+}
+
+.order-evaluation-checkbox ul li.checked{
+
+    border:1px solid #e84c3d;
+
+}
+
+.order-evaluation .order-evaluation-textarea{
+
+    position:relative;
+
+    width: 784px;
+
+    height: 210px;
+
+}
+
+.order-evaluation .order-evaluation-textarea textarea{
+
+    width:793px;
+
+    height:178px;
+
+    border:1px solid #e8e8e8;
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    line-height:22px;
+
+    padding:15px;
+
+    color:#666;
+
+}
+
+.order-evaluation .order-evaluation-textarea span{
+
+    position:absolute;
+
+    bottom:10px;
+
+    font-size:12px;
+
+    color:#999;
+
+    right:10px;
+
+}
+
+.order-evaluation .order-evaluation-textarea span em{
+
+    color:#e84c3d;
+
+}
+
+.order-evaluation>a{
+
+    width:154px;
+
+    height:48px;
+
+    border-radius: 6px;
+
+    display: block;
+
+    text-align: center;
+
+    line-height:48px;
+
+    background:#f36a5a;
+
+    float:right;
+
+    margin-top:20px;
+
+    color:#fff;
+
+    font-size:14px;
+
+}
+
+.order-evaluation-checkbox ul li i {
+
+    display: none;
+
+    color: #e84c3d;
+
+    position: absolute;
+
+    right: -4px;
+
+    bottom: -14px;
+
+    font-size: 20px;
+
+}
+
+.order-evaluation>a:hover{
+
+    background: #e84c3d;
+
+}
+
+.block li label,.con span{ font-size: 18px; margin-right: 20px; line-height: 23px;}
+
+.block li span{
+    /*display: inline-block; */
+    vertical-align: middle;
+    cursor: pointer;
+}
+.block li span img{margin-right: -5px; }
+
+.level{color:#e84c3d;font-size:16px;margin-left:15px;position: relative;top: 3px;}
+
+.dmlei_tishi_info{
+
+    height:70px;border-radius: 10px;background: rgba(0,0,0,0.5);font-size:18px;color:#fff;text-align: center;line-height: 70px;position:fixed;
+
+    left: 48%;
+
+    display: none;
+
+    margin-left: -128px;
+
+    top: 40%;
+
+    margin-top: -35px;
+
+    padding: 0 15px;
+
+    z-index: 1000;
+
+}
+
+</style>
+</head>
+<body ontouchstart="">
+<!-- 列表组顶部说明文字 -->
+
+
+
+
+<div class="container" id="container">
+
+    <div class="page article js_show">
+        <header class="header" style="padding: 35px 0;">
+            <h1 class="title" id="title-push"
+                style="text-align: center;font-size: 25px; color: #3cc51f;font-weight: 400; margin: 0 15%;">货物交付完成通知</h1>
+            <p class="ub-title" id="date-push-jfwc" style="text-align: center;color: #888;font-size: 14px;" >2020-05-30
+                20:18:33</p>
+        </header>
+        <div class="page__bd">
+            <article class="weui-article">
+                <!--<h1>货物交付详情</h1>-->
+                <section>
+                    <section>
+
+                        <div class="weui_cells huanhang" id="view_info_item1">
+                            <!---->
+                            <div class="weui-form-preview">
+                                <div class="weui-form-preview__hd">
+                                    <label class="weui-form-preview__label">运单号</label>
+                                    <em class="weui-form-preview__value"  STYLE="font-size: 1.2em;" id="jfwc-xqdh">20200303JHBK223</em>
+                                </div>
+                                <div class="weui-form-preview__bd">
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">品名</label>
+                                        <span class="weui-form-preview__value" id="jfwc-pm">电动打蛋机</span>
+                                    </div>
+
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">发站</label>
+                                        <span class="weui-form-preview__value" id="jfwc-fz">电动打蛋机</span>
+                                    </div>
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">到站</label>
+                                        <span class="weui-form-preview__value" id="jfwc-dz">名字名字名字</span>
+                                    </div>
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">货区货位</label>
+                                        <span class="weui-form-preview__value" id="jfwc-hqhw">很长很长的名字很长很长</span>
+                                    </div>
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">交付时间</label>
+                                        <span class="weui-form-preview__value" id="jfwx-time">很长很长的名字很长很长</span>
+                                    </div>
+                                </div>
+                                <div class="weui-form-preview__ft">
+
+
+                                </div>
+                            </div>
+                            <!--<ul id="img_ps_hjxt" style="height: 500%"></ul>-->
+
+                            <div class="weui-grids" id="img_ps_hjxt"></div>
+                        </div>
+
+                    </section>
+                    <section>
+                        <h3></h3>
+                        <p>
+
+                        </p>
+                        <!---->
+                        <div class="order-evaluation clearfix">
+
+                            <h4>给本次运输服务评价</h4>
+
+                            <p>请严肃认真对待此次评价哦！您的评价对我们真的真的非常重要！</p>
+
+                            <div class="block">
+
+                                <ul>
+
+                                    <li data-default-index="0">
+
+                        <span>
+
+                            <img th:src="@{../wx/img/ic_pingjia_no.png}" style="width: 30px;height: 30px;margin-left: 5px;margin-right: 5px" >
+
+                            <img th:src="@{../wx/img/ic_pingjia_no.png}" style="width: 30px;height: 30px;margin-left: 5px;margin-right: 5px">
+
+                            <img th:src="@{../wx/img/ic_pingjia_no.png}" style="width: 30px;height: 30px;margin-left: 5px;margin-right: 5px">
+
+                            <img th:src="@{../wx/img/ic_pingjia_no.png}" style="width: 30px;height: 30px;margin-left: 5px;margin-right: 5px">
+
+                            <img th:src="@{../wx/img/ic_pingjia_no.png}" style="width: 30px;height: 30px;margin-left: 5px;margin-right: 5px">
+
+                        </span>
+
+                                        <em class="level"></em>
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                            <div class="order-evaluation-text">
+
+                                本次货物运输，给您留下了什么印象呢？
+
+                            </div>
+
+                            <div class="order-evaluation-checkbox">
+
+                                <ul class="clearfix">
+
+                                    <li class="order-evaluation-check" data-impression="1" style="float: left">专业水平高<i class="iconfont icon-checked"></i></li>
+
+                                    <li class="order-evaluation-check" data-impression="2" style="float: right">交付准时<i class="iconfont icon-checked"></i></li>
+
+                                    <li class="order-evaluation-check" data-impression="3" style="float: left">服务态度热情<i class="iconfont icon-checked"></i></li>
+
+                                    <li class="order-evaluation-check" data-impression="4" style="float: right">货物完好无破损<i class="iconfont icon-checked"></i></li>
+
+                                    <li class="order-evaluation-check" data-impression="5" style="float: left">服务态度待提高<i class="iconfont icon-checked"></i></li>
+
+                                    <li class="order-evaluation-check" data-impression="6" style="float: right">办事效率待提高<i class="iconfont icon-checked"></i></li>
+
+                                </ul>
+
+                            </div>
+
+                            <div class="order-evaluation-textarea">
+
+                                <textarea name="content" id="TextArea1" onkeyup="words_deal();" ></textarea>
+
+                                <span>还可以输入<em id="textCount">140</em>个字</span>
+
+                            </div>
+
+                            <a href="javascript:;" id="order_evaluation">评价完成</a>
+
+                        </div>
+                        <div id="order_evaluate_modal" class="dmlei_tishi_info"></div>
+                        <!---->
+                    </section>
+                </section>
+            </article>
+        </div>
+        <div class="page__ft">
+            <a href="javascript:home()"><img src=""></a>
+        </div>
+    </div>
+</div>
+
+
+<!-- <script src="js/zepto.min.js"></script> -->
+<script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.1.4/weui.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    var yxlist=["","","","","",""];
+    /*
+
+     * 根据index获取 str
+
+     * **/
+
+    function byIndexLeve(index){
+
+        var str ="";
+
+        switch (index)
+
+        {
+
+            case 0:
+
+                str="差评";
+
+                break;
+
+            case 1:
+
+                str="较差";
+
+                break;
+
+            case 2:
+
+                str="中等";
+
+                break;
+
+            case 3:
+
+                str="一般";
+
+                break;
+
+            case 4:
+
+                str="好评";
+
+                break;
+
+        }
+
+        return str;
+
+    }
+
+    //  星星数量
+
+    var stars = [
+
+        ['ic_pingjia_yes.png', 'ic_pingjia_no.png', 'ic_pingjia_no', 'ic_pingjia_no', 'ic_pingjia_no.png'],
+
+        ['ic_pingjia_yes.png', 'ic_pingjia_yes.png', 'ic_pingjia_no.png', 'ic_pingjia_no.png', 'ic_pingjia_no.png'],
+
+        ['ic_pingjia_yes.png', 'ic_pingjia_yes.png', 'ic_pingjia_yes.png', 'ic_pingjia_no.png', 'ic_pingjia_no.png'],
+
+        ['ic_pingjia_yes.png', 'ic_pingjia_yes.png', 'ic_pingjia_yes.png', 'ic_pingjia_yes.png', 'ic_pingjia_no.png'],
+
+        ['ic_pingjia_yes.png', 'ic_pingjia_yes.png', 'ic_pingjia_yes.png', 'ic_pingjia_yes.png', 'ic_pingjia_yes.png'],
+
+    ];
+
+    $(".block li").find("img").hover(function(e) {
+
+        var obj = $(this);
+
+        var index = obj.index();
+
+        if(index < (parseInt($(".block li").attr("data-default-index")) -1)){
+
+            return ;
+
+        }
+
+        var li = obj.closest("li");
+
+        var star_area_index = li.index();
+
+        for (var i = 0; i < 5; i++) {
+
+            li.find("img").eq(i).attr("src", "../js/vdata/"+stars[index][i] );//切换每个星星
+
+        }
+
+        $(".level").html(byIndexLeve(index));
+
+    }, function() {
+
+    });
+
+
+
+    $(".block li").hover(function(e) {
+
+    }, function() {
+
+        var index = $(this).attr("data-default-index");//点击后的索引
+
+        index = parseInt(index);
+
+        console.log("index",index);
+
+        $(".level").html(byIndexLeve(index-1));
+
+        console.log(byIndexLeve(index-1));
+
+        $(".order-evaluation ul li:eq(0)").find("img").attr("src", "../wx/img/ic_pingjia_no.png" );
+
+        for (var i=0;i<index;i++){
+
+
+
+            $(".order-evaluation ul li:eq(0)").find("img").eq(i).attr("src", "../wx/img/ic_pingjia_yes.png");
+
+        }
+
+    });
+
+    $(".block li").find("img").click(function() {
+
+        var obj = $(this);
+
+        var li = obj.closest("li");
+
+        var star_area_index = li.index();
+
+        var index1 = obj.index();
+
+        li.attr("data-default-index", (parseInt(index1)+1));
+
+        var index = $(".block li").attr("data-default-index");//点击后的索引
+
+        index = parseInt(index);
+
+        console.log("index",index);
+
+        $(".level").html(byIndexLeve(index-1));
+
+        console.log(byIndexLeve(index-1));
+
+        $(".order-evaluation ul li:eq(0)").find("img").attr("src", "../wx/img/ic_pingjia_no.png");
+
+        for (var i=0;i<index;i++){
+
+            $(".order-evaluation ul li:eq(0)").find("img").eq(i).attr("src", "../wx/img/ic_pingjia_yes.png");
+
+        }
+
+
+
+    });
+
+    //印象
+
+    $(".order-evaluation-check").click(function(){
+        var index = $(this).index();
+        console.log($(this).index());
+        var yx = $(this)[0].innerText;
+        console.log($(this)[0].innerText);
+
+        if($(this).hasClass('checked')){
+
+            //当前为选中状态，需要取消
+
+            $(this).removeClass('checked');
+            yxlist[index] = "";
+        }else{
+
+            //当前未选中，需要增加选中
+
+            $(this).addClass('checked');
+            yxlist[index] = yx;
+        }
+
+    });
+
+    //评价字数限制
+
+    function words_deal() {
+
+        var curLength=$("#TextArea1").val().length;
+
+        if(curLength>140)
+
+        {
+
+            var num=$("#TextArea1").val().substr(0,140);
+
+            $("#TextArea1").val(num);
+
+            alert("超过字数限制，多出的字将被截断！" );
+
+        }
+
+        else
+
+        {
+
+            $("#textCount").text(140-$("#TextArea1").val().length);
+
+        }
+
+    }
+
+    /**
+     * 点击评价完成时的事件监听
+     */
+    $("#order_evaluation").click(function(){
+        var em=document.querySelector('.level');
+        var start_pj = em.innerHTML;//几星评价
+        var edit = $("#TextArea1").val();//打字评价
+        var yx = "";//用户印象评价
+        for (let i = 0; i <yxlist.length ; i++) {
+            if( yxlist[i] !== null &&  yxlist[i] !=="" &&yxlist !== undefined){
+                yx += yxlist[i];
+            }
+        }
+        console.log(start_pj);//几星评价
+        console.log(yxlist);//印象评价
+        console.log($("#TextArea1").val());//打字评价
+
+        pushPjInfoToNet(start_pj,yx,edit);
+        // $.toast("微信授权成功");
+        // $.toptip('操作成功', 'success');
+        $("#order_evaluate_modal").html("感谢您的评价！祝您生活愉快").show().delay(3000).hide(500);
+
+    })
+
+</script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js"></script>
+</body>
+</html>

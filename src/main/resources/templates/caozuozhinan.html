@@ -1,0 +1,648 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title> 操作指南</title>
+
+    <script th:src="@{../wx/js/jquery.min.js}"></script>
+    <script th:src="@{../wx/js/mybaseurl.js}"></script>
+    <!--<script th:src="@{../wx/js/push.js}"></script>-->
+    <link rel="stylesheet" type="text/css" th:href="@{../wx/css/weui.min.css}">
+    <!--<link rel="stylesheet" type="text/css" th:href="@{../js/css/example.css}">-->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.3/style/weui.min.css">
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/0.4.2/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
+    <style type="text/css">#__vconsole {
+        font-size: 13px
+    }
+
+    #__vconsole .vc-switch {
+        display: block;
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+        color: #fff;
+        background-color: #04be02;
+        line-height: 1;
+        font-size: 14px;
+        padding: 8px 16px;
+        z-index: 10000;
+        border-radius: 4px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, .4)
+    }
+
+    #__vconsole .vc-mask {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: transparent;
+        z-index: 10001;
+        transition: background .3s;
+        -webkit-tap-highlight-color: transparent
+    }
+
+    #__vconsole .vc-panel {
+        position: fixed;
+        min-height: 80%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10002;
+        background-color: #efeff4;
+        -webkit-transition: -webkit-transform .3s;
+        transition: -webkit-transform .3s;
+        transition: transform .3s;
+        transition: transform .3s, -webkit-transform .3s;
+        -webkit-transform: translateY(100%);
+        transform: translateY(100%)
+    }
+
+    #__vconsole .vc-tabbar {
+        border-bottom: 1px solid #d9d9d9;
+        overflow: hidden
+    }
+
+    #__vconsole .vc-tabbar .vc-tab {
+        float: left;
+        line-height: 39px;
+        padding: 0 15px;
+        border-right: 1px solid #d9d9d9;
+        text-decoration: none;
+        color: #000;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none
+    }
+
+    #__vconsole .vc-tabbar .vc-tab:active {
+        background-color: rgba(0, 0, 0, .15)
+    }
+
+    #__vconsole .vc-tabbar .vc-tab.vc-actived {
+        background-color: #fff
+    }
+
+    #__vconsole .vc-content {
+        background-color: #fff;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        position: absolute;
+        top: 40px;
+        left: 0;
+        right: 0;
+        bottom: 40px;
+        -webkit-overflow-scrolling: touch
+    }
+
+    #__vconsole .vc-logbox {
+        display: none;
+        position: relative;
+        height: 100%
+    }
+
+    #__vconsole .vc-logbox i {
+        font-style: normal
+    }
+
+    #__vconsole .vc-logbox .vc-log {
+        -webkit-tap-highlight-color: transparent
+    }
+
+    #__vconsole .vc-logbox .vc-log:empty:before {
+        content: "No log";
+        color: #999;
+        position: absolute;
+        top: 45%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        font-size: 15px;
+        text-align: center
+    }
+
+    #__vconsole .vc-logbox .vc-item {
+        margin: 0;
+        padding: 6px 8px;
+        line-height: 1.3;
+        border-bottom: 1px solid #eee;
+        word-break: break-word
+    }
+
+    #__vconsole .vc-logbox .vc-item-info {
+        color: #6a5acd
+    }
+
+    #__vconsole .vc-logbox .vc-item-debug {
+        color: #daa520
+    }
+
+    #__vconsole .vc-logbox .vc-item-warn {
+        color: orange;
+        border-color: #ffb930;
+        background-color: #fffacd
+    }
+
+    #__vconsole .vc-logbox .vc-item-error {
+        color: #dc143c;
+        border-color: #f4a0ab;
+        background-color: #ffe4e1
+    }
+
+    #__vconsole .vc-logbox .vc-item .vc-fold {
+        display: block;
+        max-height: 300px;
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch
+    }
+
+    #__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-outer {
+        display: block;
+        font-style: italic
+    }
+
+    #__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-outer:active {
+        background-color: rgba(0, 0, 0, .15)
+    }
+
+    #__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-outer {
+        padding-left: 10px;
+        position: relative
+    }
+
+    #__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-outer:before {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 2px;
+        width: 0;
+        height: 0;
+        border: 4px solid transparent;
+        border-left-color: #000
+    }
+
+    #__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-inner {
+        display: none
+    }
+
+    #__vconsole .vc-logbox .vc-item .vc-fold.vc-toggle .vc-fold-outer:before {
+        top: 6px;
+        left: 0;
+        border-top-color: #000;
+        border-left-color: transparent
+    }
+
+    #__vconsole .vc-logbox .vc-item .vc-fold.vc-toggle .vc-fold-inner {
+        display: block
+    }
+
+    #__vconsole .vc-logbox .vc-code-key {
+        color: #905
+    }
+
+    #__vconsole .vc-logbox .vc-code-number {
+        color: #0086b3
+    }
+
+    #__vconsole .vc-logbox .vc-code-string {
+        color: #183691
+    }
+
+    #__vconsole .vc-logbox.vc-actived {
+        display: block
+    }
+
+    #__vconsole .vc-toolbar {
+        border-top: 1px solid #d9d9d9;
+        line-height: 39px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden
+    }
+
+    #__vconsole .vc-toolbar .vc-tool {
+        text-decoration: none;
+        color: #000;
+        width: 50%;
+        float: left;
+        text-align: center;
+        position: relative;
+        -webkit-touch-callout: none
+    }
+
+    #__vconsole .vc-toolbar .vc-tool:after {
+        content: " ";
+        position: absolute;
+        top: 7px;
+        bottom: 7px;
+        right: 0;
+        border-left: 1px solid #d9d9d9
+    }
+
+    #__vconsole .vc-toolbar .vc-tool-last:after {
+        border: none
+    }
+
+    #__vconsole.vc-toggle .vc-switch {
+        display: none
+    }
+
+    #__vconsole.vc-toggle .vc-mask {
+        background: rgba(0, 0, 0, .6);
+        display: block
+    }
+
+    #__vconsole.vc-toggle .vc-panel {
+        -webkit-transform: translate(0);
+        transform: translate(0)
+    }</style>
+    <style type="text/css">body {
+        background-color: #efeff4
+    }</style>
+    <style type="text/css">.weui_avatar {
+        width: 52px;
+        height: 52px;
+        border-radius: 4px;
+        vertical-align: middle
+    }</style>
+    <style type="text/css"></style>
+    <style type="text/css">.swiper, .swiper-wrapper {
+        overflow: hidden
+    }
+
+    .swiper {
+        height: 200px;
+        -webkit-transition: all .3s ease;
+        transition: all .3s ease
+    }
+
+    .item {
+        height: 100%;
+        background-position: 50%;
+        background-size: cover;
+        position: relative;
+        overflow: hidden;
+        float: left
+    }
+
+    .item.active .animated {
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        opacity: 1
+    }
+
+    .item:not(.active) .animated {
+        -webkit-animation: none;
+        animation: none;
+        opacity: 0
+    }</style>
+    <style type="text/css">.weui_cells_checkbox > .weui_cell > *, .weui_cells_radio > .weui_cell > * {
+        pointer-events: none
+    }</style>
+    <style type="text/css"></style>
+    <style type="text/css">.weui_panel {
+        margin-top: 0
+    }
+
+    .weui_pull {
+        -webkit-transform: translate3d(0, -40px, 0);
+        transform: translate3d(0, -40px, 0)
+    }
+
+    .weui_pull_tips {
+        text-align: center;
+        font-size: 12px;
+        padding: 10px;
+        color: #888
+    }
+
+    .weui_pull_loading {
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        vertical-align: -4px;
+        -webkit-animation: loadingAnimation 1s steps(12) infinite;
+        animation: loadingAnimation 1s steps(12) infinite;
+        background: transparent url(data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iciIgd2lkdGg9JzEyMHB4JyBoZWlnaHQ9JzEyMHB4JyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSJub25lIiBjbGFzcz0iYmsiPjwvcmVjdD4KICAgIDxyZWN0IHg9JzQ2LjUnIHk9JzQwJyB3aWR0aD0nNycgaGVpZ2h0PScyMCcgcng9JzUnIHJ5PSc1JyBmaWxsPScjRTlFOUU5JwogICAgICAgICAgdHJhbnNmb3JtPSdyb3RhdGUoMCA1MCA1MCkgdHJhbnNsYXRlKDAgLTMwKSc+CiAgICA8L3JlY3Q+CiAgICA8cmVjdCB4PSc0Ni41JyB5PSc0MCcgd2lkdGg9JzcnIGhlaWdodD0nMjAnIHJ4PSc1JyByeT0nNScgZmlsbD0nIzk4OTY5NycKICAgICAgICAgIHRyYW5zZm9ybT0ncm90YXRlKDMwIDUwIDUwKSB0cmFuc2xhdGUoMCAtMzApJz4KICAgICAgICAgICAgICAgICByZXBlYXRDb3VudD0naW5kZWZpbml0ZScvPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyM5Qjk5OUEnCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSg2MCA1MCA1MCkgdHJhbnNsYXRlKDAgLTMwKSc+CiAgICAgICAgICAgICAgICAgcmVwZWF0Q291bnQ9J2luZGVmaW5pdGUnLz4KICAgIDwvcmVjdD4KICAgIDxyZWN0IHg9JzQ2LjUnIHk9JzQwJyB3aWR0aD0nNycgaGVpZ2h0PScyMCcgcng9JzUnIHJ5PSc1JyBmaWxsPScjQTNBMUEyJwogICAgICAgICAgdHJhbnNmb3JtPSdyb3RhdGUoOTAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyNBQkE5QUEnCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSgxMjAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyNCMkIyQjInCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSgxNTAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyNCQUI4QjknCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSgxODAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyNDMkMwQzEnCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSgyMTAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyNDQkNCQ0InCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSgyNDAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyNEMkQyRDInCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSgyNzAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyNEQURBREEnCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSgzMDAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0PgogICAgPHJlY3QgeD0nNDYuNScgeT0nNDAnIHdpZHRoPSc3JyBoZWlnaHQ9JzIwJyByeD0nNScgcnk9JzUnIGZpbGw9JyNFMkUyRTInCiAgICAgICAgICB0cmFuc2Zvcm09J3JvdGF0ZSgzMzAgNTAgNTApIHRyYW5zbGF0ZSgwIC0zMCknPgogICAgPC9yZWN0Pgo8L3N2Zz4=) no-repeat;
+        background-size: 100%
+    }
+
+    @-webkit-keyframes loadingAnimation {
+        0% {
+            -webkit-transform: rotate(0deg)
+        }
+        to {
+            -webkit-transform: rotate(1turn)
+        }
+    }
+
+    @keyframes loadingAnimation {
+        0% {
+            -webkit-transform: rotate(0deg)
+        }
+        to {
+            -webkit-transform: rotate(1turn)
+        }
+    }
+
+    .p1 {
+        float: left;
+        /*display: inline;*/
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        width: 50%;
+        height: 22px;
+        overflow: hidden;
+    }
+
+    .p2 {
+        float: left;
+        /*display: inline;*/
+        height: 22px;
+        text-align: left;
+        line-height: 22px;
+    }
+
+    .huanhang {
+        clear: both;
+    }
+
+    </style>
+</head>
+<body ontouchstart="">
+
+<div class="container" id="container">
+    <header class="header" style="padding: 35px 0;">
+        <h1 class="title" id="title-push"
+            style="text-align: center;font-size: 25px; color: #3cc51f;font-weight: 400; margin: 0 15%;">操作指南</h1>
+        <p class="ub-title" id="date-push" style="text-align: center;color: #888;font-size: 14px;"></p>
+    </header>
+    <!---->
+    <ul id="view_info">
+        <li>
+            <div class="weui_cells huanhang" id="view_info_item1">
+                <!---->
+                <div class="weui-form-preview">
+                    <div class="weui-form-preview__hd">
+                        <label class="weui-form-preview__label">第一步</label>
+                        <em class="weui-form-preview__value" STYLE="font-size: 0.7em;">搜索并关注公众号</em>
+                    </div>
+                    <div class="weui-form-preview__ft">
+                        <div class="weui-form-preview__item">
+                            <img onclick="showBigImg(0)" th:src="@{../wx/img/ic_1.jpg}" alt=""
+                                 style="height: 80px;margin: 10px">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-form-preview">
+                    <div class="weui-form-preview__hd">
+                        <label class="weui-form-preview__label">第二步</label>
+                        <em class="weui-form-preview__value" STYLE="font-size: 0.7em;">绑定手机号</em>
+                    </div>
+                    <div class="weui-form-preview__ft">
+                        <div class="weui-form-preview__item_hd">
+                            <img onclick="showBigImg(1)" th:src="@{../wx/img/ic_2_1.jpg}" alt=""
+                                 style="height: 80px;margin: 10px">
+
+                        </div>
+                        <div class="weui-form-preview__item_hd">
+                            <img onclick="showBigImg(2)" th:src="@{../wx/img/ic_2_2.jpg}" alt=""
+                                 style="height: 80px;margin: 10px">
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="weui-form-preview">
+                    <div class="weui-form-preview__hd">
+                        <label class="weui-form-preview__label">第三步</label>
+                        <em class="weui-form-preview__value" STYLE="font-size: 0.7em;">添加常用货场</em>
+                    </div>
+                    <div class="weui-form-preview__ft">
+                        <div class="weui-form-preview__item">
+                            <img onclick="showBigImg(3)" th:src="@{../wx/img/ic_3.jpg}" alt=""
+                                 style="height: 80px;margin: 10px">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-form-preview">
+                    <div class="weui-form-preview__hd">
+                        <label class="weui-form-preview__label">第四步</label>
+                        <em class="weui-form-preview__value" STYLE="font-size: 0.7em;">添加常用车辆</em>
+                    </div>
+                    <div class="weui-form-preview__ft">
+                        <div class="weui-form-preview__item">
+                            <img onclick="showBigImg(4)" th:src="@{../wx/img/ic_4.jpg}" alt=""
+                                 style="height: 80px;margin: 10px">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-form-preview">
+                    <div class="weui-form-preview__hd">
+                        <label class="weui-form-preview__label">第五步</label>
+                        <em class="weui-form-preview__value" STYLE="font-size: 0.7em;">选择物流服务</em>
+                    </div>
+                    <div class="weui-form-preview__ft">
+                        <div class="weui-form-preview__item">
+                            <img onclick="showBigImg(5)" th:src="@{../wx/img/ic_5.jpg}" alt=""
+                                 style="height: 80px;margin: 10px">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-form-preview">
+                    <div class="weui-form-preview__hd">
+                        <label class="weui-form-preview__label">发到货查询</label>
+                        <em class="weui-form-preview__value" STYLE="font-size: 0.7em;">查询注册手机号对应运单信息</em>
+                    </div>
+                    <div class="weui-form-preview__ft">
+                        <div class="weui-form-preview__item">
+                            <img onclick="showBigImg(6)" th:src="@{../wx/img/ic_fh.png}" alt=""
+                                 style="height: 80px;margin: 10px">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-form-preview">
+                    <div class="weui-form-preview__hd">
+                        <label class="weui-form-preview__label">授权</label>
+                        <em class="weui-form-preview__value" STYLE="font-size: 0.7em;">货主授权好友查询集装箱清单</em>
+                    </div>
+                    <div class="weui-form-preview__ft">
+                        <div class="weui-form-preview__item">
+                            <img onclick="showBigImg(7)" th:src="@{../wx/img/ic_sq.png}" alt=""
+                                 style="height: 80px;margin: 10px">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-form-preview">
+                    <div class="weui-form-preview__hd">
+                        <label class="weui-form-preview__label">整车预约</label>
+                        <em class="weui-form-preview__value" STYLE="font-size: 0.7em;">提报后送货及提前送货</em>
+                    </div>
+                    <div class="weui-form-preview__ft">
+                        <div class="weui-form-preview__item_hd">
+                            <img onclick="showBigImg(8)" th:src="@{../wx/img/ic_zcyy.png}" alt=""
+                                 style="height: 80px;margin: 10px">
+
+                        </div>
+                        <div class="weui-form-preview__item_hd">
+                            <img onclick="showBigImg(9)" th:src="@{../wx/img/ic_zcyy2.png}" alt=""
+                                 style="height: 80px;margin: 10px">
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="weui-form-preview">
+                    <div class="weui-form-preview__hd">
+                        <label class="weui-form-preview__label">集装箱卡车预约</label>
+                        <em class="weui-form-preview__value" STYLE="font-size: 0.7em;">集装箱卡车进出门预约</em>
+                    </div>
+                    <div class="weui-form-preview__ft">
+                        <div class="weui-form-preview__item">
+                            <img onclick="showBigImg(10)" th:src="@{../wx/img/ic_jkyy.png}" alt=""
+                                 style="height: 80px;margin: 10px">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-form-preview">
+                    <div class="weui-form-preview__hd">
+                        <label class="weui-form-preview__label">预约查询及删除</label>
+                        <em class="weui-form-preview__value" STYLE="font-size: 0.7em;">查询预约信息及撤销预约</em>
+                    </div>
+                    <div class="weui-form-preview__ft">
+                        <div class="weui-form-preview__item">
+                            <img onclick="showBigImg(11)" th:src="@{../wx/img/ic_yycx.png}" alt=""
+                                 style="height: 80px;margin: 10px">
+                        </div>
+                    </div>
+                </div>
+
+                <!--<ul id="img_ps_hjxt" style="height: 500%"></ul>-->
+
+                <div class="weui-grids" id="img_ps_hjxt"></div>
+            </div>
+        </li>
+
+
+    </ul>
+    <div id="jiazai_hjxt" align="center" class="page__ft j_bottom " style="display: none;">
+        <div class="weui-loadmore" align="center">
+            <i class="weui-loading"></i>
+            <span class="weui-loadmore__tips">正在加载</span>
+        </div>
+    </div>
+    <!--无数据-->
+    <div id="jiazai_no_hjxt" align="center" class="page__ft j_bottom " style="display: none;">
+        <div class="weui-loadmore weui-loadmore_line" align="center">
+            <span class="weui-loadmore__tips">暂无数据</span>
+        </div>
+    </div>
+</div>
+
+
+<!-- <script src="js/zepto.min.js"></script> -->
+<script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.1.4/weui.min.js"></script>
+<!-- <script type="text/javascript" src="vendor.bundle.js"></script><script type="text/javascript" src="bundle.js"></script> -->
+
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js"></script>
+
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/swiper.min.js"></script>
+<script>
+    $list = [
+        {
+            image: "http://cdhahjxt.easy.echosite.cn/wechat/hjxt/wx/img/ic_1.jpg",
+            caption: ""
+        },
+        {
+            image: "http://cdhahjxt.easy.echosite.cn/wechat/hjxt/wx/img/ic_2_1.jpg",
+            caption: ""
+        },
+        {
+            image: "http://cdhahjxt.easy.echosite.cn/wechat/hjxt/wx/img/ic_2_2.jpg",
+            caption: ""
+        },
+        {
+            image: "http://cdhahjxt.easy.echosite.cn/wechat/hjxt/wx/img/ic_3.jpg",
+            caption: ""
+        },
+        {
+            image: "http://cdhahjxt.easy.echosite.cn/wechat/hjxt/wx/img/ic_4.jpg",
+            caption: ""
+        },
+        {
+            image: "http://cdhahjxt.easy.echosite.cn/wechat/hjxt/wx/img/ic_5.jpg",
+            caption: ""
+        }
+        ,
+        {
+            image: "http://cdhahjxt.easy.echosite.cn/wechat/hjxt/wx/img/ic_fh.png",
+            caption: ""
+        }
+        ,
+        {
+            image: "http://cdhahjxt.easy.echosite.cn/wechat/hjxt/wx/img/ic_sq.png",
+            caption: ""
+        }
+        ,
+        {
+            image: "http://cdhahjxt.easy.echosite.cn/wechat/hjxt/wx/img/ic_zcyy.png",
+            caption: ""
+        }
+        ,
+        {
+            image: "http://cdhahjxt.easy.echosite.cn/wechat/hjxt/wx/img/ic_zcyy2.png",
+            caption: ""
+        }
+        ,
+        {
+            image: "http://cdhahjxt.easy.echosite.cn/wechat/hjxt/wx/img/ic_jkyy.png",
+            caption: ""
+        }
+        ,
+        {
+            image: "http://cdhahjxt.easy.echosite.cn/wechat/hjxt/wx/img/ic_yycx.png",
+            caption: ""
+        }
+    ];
+
+    function showBigImg(index) {
+
+        // var imgList = $list.split(',');//list是一个图片url的字符串，以‘，’分隔的，这里把它转换成数组对象
+        // console.log('array',Array.isArray(imgList));
+
+        $.photoBrowser({
+            items: [$list[index] ], //赋值
+            // initIndex: index, //当前点击的图片下标
+            onSlideChange: function (index) {
+                console.log(this, index);
+            },
+
+            onOpen: function () {
+                console.log("onOpen", this);
+            },
+            onClose: function () {
+                console.log("onClose", this);
+            }
+        }).open();//这里一定要这样调用一下
+
+
+    }
+</script>
+</body>
+</html>
