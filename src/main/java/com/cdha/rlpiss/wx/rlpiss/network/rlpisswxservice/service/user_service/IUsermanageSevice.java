@@ -1,8 +1,10 @@
 package com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.service.user_service;
 
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.config.RestTemplateManager;
+import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.config.YcnIP;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.dao.IYCNRLStationDao;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.dao.IYCNRlUserDao;
+import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.hander.gm.GmManagerException;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.base.BaseRequestData;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.base.BaseResponseData;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.station.StationInfo;
@@ -12,12 +14,8 @@ import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.user.StationReques
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.user.User;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.ycn.*;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.service.order_service.IOrderService;
-import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.util.XMLChange;
-import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.config.YcnIP;
-import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.hander.gm.GmManagerException;
-import com.cdha.rlpiss.wx.wxservice.wxservice.pojo.user.*;
-import com.cdha.rlpiss.wx.wxservice.wxservice.pojo.ycn.*;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.util.IsYcnSys;
+import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.util.XMLChange;
 import com.cdha.wechatsub.wxtools.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

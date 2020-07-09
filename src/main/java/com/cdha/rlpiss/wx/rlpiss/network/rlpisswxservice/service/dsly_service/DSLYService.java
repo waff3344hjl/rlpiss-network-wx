@@ -35,18 +35,18 @@ import java.util.Random;
 public class DSLYService {
 
 
-    @Autowired
-    RestTemplateManager manager;
-
-
-    @Autowired
-    UrlConfig urlConfig;
+    private final RestTemplateManager manager;
+    private final UrlConfig urlConfig;
+    private final IzhwlUrlDao dao;
+    private final DuanXinYZConfig yzConfig;
 
     @Autowired
-    IzhwlUrlDao dao;
-
-    @Autowired
-    private DuanXinYZConfig yzConfig;
+    public DSLYService(RestTemplateManager manager, UrlConfig urlConfig, IzhwlUrlDao dao, DuanXinYZConfig yzConfig) {
+        this.manager = manager;
+        this.urlConfig = urlConfig;
+        this.dao = dao;
+        this.yzConfig = yzConfig;
+    }
 
     /**
      * 多式联运---------访问数据
@@ -123,13 +123,13 @@ public class DSLYService {
             //构造短信参数
 
             //发送client
-            String result = client.send(getParams(data.getData(),verifyCode));
+            String result = client.send(getParams(data.getData(), verifyCode));
             JsonParser parser = new JsonParser();
             JsonObject jsonObject = (JsonObject) parser.parse(result);
             System.out.println("jsonObject_" + jsonObject);
             if (jsonObject.get("code").getAsInt() != 0) {
                 //短信平台返回：发送失败
-                BaseDSLYReData<User> reData =    new BaseDSLYReData<User>();
+                BaseDSLYReData<User> reData = new BaseDSLYReData<User>();
                 reData.setReturnCode("-99");
                 reData.setMsg("msg send fail");
                 return reData;
@@ -140,7 +140,7 @@ public class DSLYService {
                 u.setDxyzm(verifyCode);
                 responseData.setReturnCode("0");
                 responseData.setData(u);
-                log.info("==== yzm ===  [ phone ="+ data.getData()+"]  ;  [yzm ="+verifyCode+"]");
+                log.info("==== yzm ===  [ phone =" + data.getData() + "]  ;  [yzm =" + verifyCode + "]");
                 return responseData;
             }
         } catch (Exception e) {

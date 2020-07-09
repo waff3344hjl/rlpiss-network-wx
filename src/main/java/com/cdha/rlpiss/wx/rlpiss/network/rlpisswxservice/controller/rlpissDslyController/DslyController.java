@@ -26,15 +26,17 @@ import java.util.List;
 public class DslyController {
 
 
-    @Autowired
-    DSLYService service;
+    private final DSLYService service;
 
+    @Autowired
+    public DslyController(DSLYService service) {
+        this.service = service;
+    }
 
 
     /**
-     *
-     * @param rqData
-     * @return
+     * @param rqData 1
+     * @return 1
      */
 
     @CrossOrigin
@@ -43,6 +45,7 @@ public class DslyController {
 
         return service.getDataByDsly(rqData);
     }
+
     @CrossOrigin
     @RequestMapping(path = "getToken")
     public BaseDSLYReData<BaseDSLYReData.TokenGet> getToken(@RequestBody BaseDSLYRqData<BaseDSLYRqData.AppId> rqData) {
@@ -53,7 +56,7 @@ public class DslyController {
         BaseDSLYReData.TokenGet info = new BaseDSLYReData.TokenGet();
         info.setAccessToken("123456789");
         info.setRefreshToken("987654321");
-        BaseDSLYReData<BaseDSLYReData.TokenGet> token =new BaseDSLYReData<>();
+        BaseDSLYReData<BaseDSLYReData.TokenGet> token = new BaseDSLYReData<>();
         token.setReturnCode("0");
         token.setMsg("ok");
         token.setData(info);
@@ -68,13 +71,13 @@ public class DslyController {
 
     @CrossOrigin
     @RequestMapping(path = "getAllUrls")
-    public List<ZxwlURL> getAllUrls (){
+    public List<ZxwlURL> getAllUrls() {
         return service.getAllUrls();
     }
 
     @CrossOrigin
     @RequestMapping(path = "getYzm")
-    public BaseDSLYReData<User> getYzm (@RequestBody BaseDSLYRqData<String> data){
+    public BaseDSLYReData<User> getYzm(@RequestBody BaseDSLYRqData<String> data) {
         return service.getYzm(data);
     }
 }

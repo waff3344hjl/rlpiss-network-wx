@@ -17,17 +17,21 @@ import java.util.List;
 
 
 /**
- * @author Binary Wang(https://github.com/binarywang)
+ * @author Hujl(https://github.com/binarywang)
  */
 @RestController
 @RequestMapping("/wx/menu/")
 public class WxMenuController {
 
 //    @Qualifier("IService")
+    private final WxService iService;
+    private final UrlConfig urlConfig;
+
     @Autowired
-    private WxService iService;
-    @Autowired
-    private UrlConfig urlConfig;
+    public WxMenuController(WxService iService, UrlConfig urlConfig) {
+        this.iService = iService;
+        this.urlConfig = urlConfig;
+    }
 
     public String getUrl(){
         String Get_Code = "http://cdhawxgzh.easy.echosite.cn/wechat/qr_code/zc_out";
