@@ -11,6 +11,7 @@ import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.station.StationInf
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.wxpush.WxPushData;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.wxpush.WxPushDataMsg;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.ycn.wxpush.*;
+import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.service.dsly_service.ZxWlPushService;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.util.DateUtil;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.util.XMLChange;
 import com.cdha.wechatsub.wxtools.bean.TemplateSender;
@@ -154,13 +155,7 @@ public class WxPushMsgService {
 
     private void wxPushMsgToUser(String wxopenid, WxPushDataMsg msgInfo, String wxMBiD, String wxMbUrl) throws WxErrorException {
 
-        TemplateSender sender = new TemplateSender();
-        sender.setTemplate_id(wxMBiD);
-        sender.setTouser(wxopenid);
-        sender.setData(msgInfo);
-        sender.setUrl(wxMbUrl);//设置模版信息的超链接
-
-        TemplateSenderResult result = wxService.templateSend(sender);
+        ZxWlPushService.wxPush(wxopenid, msgInfo, wxMBiD, wxMbUrl, wxService);
 
     }
 

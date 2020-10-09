@@ -1,6 +1,7 @@
 package com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.util.quartz;
 
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.hander.gm.GmManagerException;
+import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.service.dsly_service.ZxWlPushService;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.service.wxpush_service.WxPushMsgService;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -8,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Date;
 
@@ -18,6 +21,9 @@ public class SampleJob extends QuartzJobBean {
     private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     WxPushMsgService service;
+
+    @Autowired
+    ZxWlPushService pushService;
 
 
     private String name;
@@ -32,8 +38,36 @@ public class SampleJob extends QuartzJobBean {
             throws JobExecutionException {
 //        doPushByOrderTime();
 //        doPushByOrderTime2();
+//        zxwlPush(); //物流推送
         System.out.println(String.format("Hello %s!" + new Date(), this.name));
     }
+
+    private void zxwlPush() {
+        /* 推送新好友添加信息*/
+
+        pushService.pushWhoAddMe();
+
+
+        /*
+         * 到货通知
+         */
+
+        pushService.pushArrivalNotice();
+
+
+        /*
+         * 货物已发通知
+         */
+        pushService.pushDeliveryNotice();
+
+
+        /*
+         * 汽车运输完成通知
+         */
+        pushService.pushCompletionNotice();
+
+    }
+
 
     private void doPushByOrderTime() {
         try {
@@ -85,7 +119,6 @@ public class SampleJob extends QuartzJobBean {
     }
 
 
-
     private void doPushByOrderTime2() {
         try {
             service.pushXQDshouli();//需求单受理
@@ -96,8 +129,9 @@ public class SampleJob extends QuartzJobBean {
             service.pushQcJcmXx();//进出门完成
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw new GmManagerException("=== 推送模块异常 ===="+e.getMessage());
+            throw new GmManagerException("=== 推送模块异常 ====" + e.getMessage());
 
         }
     }
+
 }

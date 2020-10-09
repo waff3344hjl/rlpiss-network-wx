@@ -27,19 +27,20 @@ public class WxMenuController {
     private final WxService iService;
     private final UrlConfig urlConfig;
 
+
     @Autowired
     public WxMenuController(WxService iService, UrlConfig urlConfig) {
         this.iService = iService;
         this.urlConfig = urlConfig;
     }
 
-    public String getUrl(){
-        String Get_Code = "http://cdhawxgzh.easy.echosite.cn/wechat/qr_code/zc_out";
-        String SCOPE = WxConsts.OAUTH2_SCOPE_USER_INFO;
-        String Sata = "123";
-        String url = iService.oauth2buildAuthorizationUrl(Get_Code,SCOPE,Sata);
-        return url;
-    }
+//    public String getUrl(){
+//        String Get_Code = "http://cdhawxgzh.easy.echosite.cn/wechat/qr_code/zc_out";
+//        String SCOPE = WxConsts.OAUTH2_SCOPE_USER_INFO;
+//        String Sata = "123";
+//        String url = iService.oauth2buildAuthorizationUrl(Get_Code,SCOPE,Sata);
+//        return url;
+//    }
     /**
      * <pre>
      * 自定义菜单创建接口
@@ -56,7 +57,6 @@ public class WxMenuController {
 
         String Get_Code_gr =  urlConfig.getMUrl();//智慧物流
         String Get_Code_zc  =urlConfig.getMUrl()+ "qr_code/gywm";//关于我们
-        String Get_ZC_GM  =urlConfig.getMUrl()+ "qr_code/zcmanager";//工作人员界面
         String Get_Code_ewm  = urlConfig.getMUrl()+"qr_code/czzn";//操作指南
         String SCOPE_gr = WxConsts.OAUTH2_SCOPE_USER_INFO;
         String Sata_gr = "123";

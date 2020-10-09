@@ -19,4 +19,11 @@ public class UrlConfig {
     private String mUrl;
 
     private String dslyUrl;
+
+    private String pushDhUrl;
+    private String pushFhUrl;
+    private String pushYswcUrl;
+    private String pushJsqUrl;
+    private String pushGetPushInfo;
+    private String pushNewTastUrl;
 }

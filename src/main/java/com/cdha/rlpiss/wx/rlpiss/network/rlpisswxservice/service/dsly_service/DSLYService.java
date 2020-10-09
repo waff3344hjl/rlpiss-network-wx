@@ -71,21 +71,6 @@ public class DSLYService {
 
     }
 
-//    private void  sendMsgToWl (String phone,String yzm) throws Exception {
-//        User user = new User();
-//        user.setDxyzm(yzm);
-//        user.setSjh(phone);
-//        BaseRequestData<User> wlrq = new BaseRequestData<>();
-//        wlrq.setRqData(user);
-//        wlrq.setMethod("app");
-//
-//        String wlrqString = JSONObject.toJSONString(wlrq);
-//        String dataString = AesEncrypt.encrypt(wlrqString);
-//
-//        BaseDSLYRqData<BaseDSLYRqData.BusinessData> dsrq = new BaseDSLYRqData<>();
-//
-//    }
-
     private void checkBusinessData(BaseDSLYRqData<BaseDSLYRqData.BusinessData> rqData) {
         if (StringUtils.isEmpty(rqData.getGrant_Type())) {
             log.error("=======  获取数据参数异常  ====== ：" + rqData.toString());
