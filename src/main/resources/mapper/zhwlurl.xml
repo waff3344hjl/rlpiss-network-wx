@@ -10,10 +10,11 @@
         <result column="WL_URL" property="wlUrl" jdbcType="VARCHAR"/>
         <result column="JSQ_URL" property="jsqUrl" jdbcType="VARCHAR"/>
         <result column="HYZ_URL" property="hyzUrl" jdbcType="VARCHAR"/>
+        <result column="FWBZ_NO" property="fubzNo" jdbcType="VARCHAR"/>
 
     </resultMap>
     <sql id="Base_Column_List">
-    ID, ZMZTYBM, ZMZCZMC, ZMZCTMS, JDM ,WL_URL ,JSQ_URL,HYZ_URL
+    ID, ZMZTYBM, ZMZCZMC, ZMZCTMS, JDM ,WL_URL ,JSQ_URL,HYZ_URL,FWBZ_NO
   </sql>
 
     <select id="getAllUrls" resultMap="BaseResultMap" parameterType="java.lang.String">

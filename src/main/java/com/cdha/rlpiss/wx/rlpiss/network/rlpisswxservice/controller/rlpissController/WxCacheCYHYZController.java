@@ -2,6 +2,7 @@ package com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.controller.rlpissContr
 
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.base.BaseDSLYReData;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.base.BaseDSLYRqData;
+import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.base.BaseResponseData;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.zhwl.CacheCyczInfo;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.service.jiguang_push.bean.PushBean;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.service.wx_cycz_cache.IWxCacheCYHYZ;
@@ -45,7 +46,7 @@ public class WxCacheCYHYZController {
      */
     @CrossOrigin
     @RequestMapping(path = "addCache")
-    public BaseDSLYReData<String> addCache(@RequestBody BaseDSLYRqData<CacheCyczInfo> data) {
+    public BaseResponseData<String> addCache(@RequestBody BaseDSLYRqData<CacheCyczInfo> data) {
         return wxCacheService.cacheCycz(data);
     }
 
@@ -57,7 +58,7 @@ public class WxCacheCYHYZController {
      */
     @CrossOrigin
     @RequestMapping(path = "getCache")
-    public BaseDSLYReData<CacheCyczInfo> getCache(@RequestBody BaseDSLYRqData<CacheCyczInfo> data) {
+    public BaseResponseData<CacheCyczInfo> getCache(@RequestBody BaseDSLYRqData<CacheCyczInfo> data) {
         return wxCacheService.getCache(data);
     }
 

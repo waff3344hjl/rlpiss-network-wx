@@ -6,7 +6,7 @@
 -->
 <configuration scan="false" scanPeriod="60 seconds" debug="false">
     <!-- 定义日志的根目录 -->
-    <property name="LOG_HOME" value="E:/hyzxt_wxgzh/银川南公众号/wxgzhLog/logs"/>
+    <property name="LOG_HOME" value="D:/rlpiss-wx-gzh/物流日志/wxgzhLog/logs"/>
     <!-- 定义日志文件名称 -->
     <property name="appName" value="docker"/>
 

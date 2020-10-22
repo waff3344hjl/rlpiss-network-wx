@@ -26,4 +26,10 @@ public class UrlConfig {
     private String pushJsqUrl;
     private String pushGetPushInfo;
     private String pushNewTastUrl;
+
+    private String pushTccJm;
+    private String pushTccCm;
+    private String pushTccInfo;
+
+
 }

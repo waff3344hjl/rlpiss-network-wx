@@ -4,6 +4,7 @@ import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.dao.IzhwlWxCacheDao;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.hander.gm.GmManagerException;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.base.BaseDSLYReData;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.base.BaseDSLYRqData;
+import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.base.BaseResponseData;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.zhwl.CacheCyczInfo;
 import com.cdha.wechatsub.wxtools.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -42,8 +43,8 @@ public class IWxCacheCYHYZ {
      * @return 插入标记
      */
     @Transactional
-    public BaseDSLYReData<String> cacheCycz(BaseDSLYRqData<CacheCyczInfo> data) {
-        BaseDSLYReData<String> result = new BaseDSLYReData<>();
+    public BaseResponseData<String> cacheCycz(BaseDSLYRqData<CacheCyczInfo> data) {
+        BaseResponseData<String> result = new BaseResponseData<>();
         if (data == null || data.getData() == null || StringUtils.isEmpty(data.getData().getOpenid())) {
             throw new GmManagerException("参数异常");
         }
@@ -51,9 +52,9 @@ public class IWxCacheCYHYZ {
         try {
             int tag = dao.insertCacheWxCycz(info);
             if (tag > 0) {
-                result.setReturnCode("0");
+                result.setCode("0");
                 result.setMsg("缓存设置成功");
-                result.setData("缓存设置成功,条数 = " + tag);
+                result.setRsData("缓存设置成功,条数 = " + tag);
             } else {
                 throw new GmManagerException("操作数据库失败");
             }
@@ -72,7 +73,7 @@ public class IWxCacheCYHYZ {
      * @param data 用户信息---openid
      * @return 常用车站信息
      */
-    public BaseDSLYReData<CacheCyczInfo> getCache(BaseDSLYRqData<CacheCyczInfo> data) {
+    public BaseResponseData<CacheCyczInfo> getCache(BaseDSLYRqData<CacheCyczInfo> data) {
         if (data == null || data.getData() == null || StringUtils.isEmpty(data.getData().getOpenid())) {
             throw new GmManagerException("参数异常");
         }
@@ -82,9 +83,9 @@ public class IWxCacheCYHYZ {
             if (resultInfo == null) {
                 throw new GmManagerException("没有相关缓存信息");
             } else {
-                BaseDSLYReData<CacheCyczInfo> result = new BaseDSLYReData<>();
-                result.setReturnCode("0");
-                result.setData(resultInfo);
+                BaseResponseData<CacheCyczInfo> result = new BaseResponseData<>();
+                result.setCode("0");
+                result.setRsData(resultInfo);
                 return result;
             }
         } catch (Exception e) {

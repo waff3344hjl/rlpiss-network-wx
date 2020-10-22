@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.dao.IzhwlCarParkDao">
+    <resultMap id="BaseResultMap" type="com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.carpark.CarParkUrl">
+
+        <result column="APPKEY" property="appKey" jdbcType="VARCHAR"/>
+        <result column="SECRETKEY" property="secretkey" jdbcType="VARCHAR"/>
+        <!--<id column="ID" property="id" jdbcType="VARCHAR"/>-->
+        <result column="ZMZTYBM" property="dbm" jdbcType="VARCHAR"/>
+        <result column="ZMZCZMC" property="zm" jdbcType="VARCHAR"/>
+        <result column="ZMZCTMS" property="tms" jdbcType="VARCHAR"/>
+        <result column="JDM" property="jdm" jdbcType="VARCHAR"/>
+        <result column="WL_URL" property="wlUrl" jdbcType="VARCHAR"/>
+        <result column="JSQ_URL" property="jsqUrl" jdbcType="VARCHAR"/>
+        <result column="HYZ_URL" property="hyzUrl" jdbcType="VARCHAR"/>
+        <result column="FWBZ_NO" property="fubzNo" jdbcType="VARCHAR"/>
+
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    t.APPKEY,t.SECRETKEY, tt.ZMZTYBM, tt.ZMZCZMC, tt.ZMZCTMS, tt.JDM ,tt.WL_URL ,tt.JSQ_URL,tt.HYZ_URL,tt.FWBZ_NO
+  </sql>
+
+    <select id="getIpByAppkey" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+
+        select
+       t.APPKEY,t.SECRETKEY, tt.ZMZTYBM, tt.ZMZCZMC, tt.ZMZCTMS, tt.JDM ,tt.WL_URL ,tt.JSQ_URL,tt.HYZ_URL,tt.FWBZ_NO
+        from ZHWL_RUL_CARPARK t,zhwl_rul_sat tt
+        where
+        t.sa_id = tt.id
+        and
+        t.appkey = #{appkey}
+    </select>
+
+
+</mapper>

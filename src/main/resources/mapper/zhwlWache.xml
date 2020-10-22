@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.dao.IzhwlWxCacheDao">
+    <resultMap id="BaseResultMap" type="com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.zhwl.CacheCyczInfo">
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="OPENID" property="openid" jdbcType="VARCHAR"/>
+        <result column="CZTMIS" property="tms" jdbcType="VARCHAR"/>
+        <result column="CZDBM" property="dbm" jdbcType="VARCHAR"/>
+        <result column="CZMC" property="zm" jdbcType="VARCHAR"/>
+        <result column="WL_URL" property="wlUrl" jdbcType="VARCHAR"/>
+        <result column="JSQ_URL" property="jsqUrl" jdbcType="VARCHAR"/>
+        <result column="HYZ_URL" property="hyzUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, OPENID, CZTMIS, CZDBM, CZMC ,WL_URL ,JSQ_URL,HYZ_URL
+  </sql>
+
+    <select id="findCacheWxCycz" resultMap="BaseResultMap"
+            parameterType="com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.zhwl.CacheCyczInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from TD_CACHE_WXUSER
+        where OPENID = #{openid}
+    </select>
+
+    <insert id="insertCacheWxCycz"
+            parameterType="com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.zhwl.CacheCyczInfo">
+           merge into
+             TD_CACHE_WXUSER t1
+           using (select #{openid} OPENID from dual) t2
+           on (t1.OPENID=t2.OPENID)
+           when matched then
+           update set
+              t1.CZTMIS=#{tms},
+              t1.CZDBM=#{dbm},
+              t1.CZMC=#{zm},
+              t1.WL_URL=#{wlUrl},
+              t1.JSQ_URL=#{jsqUrl},
+              t1.HYZ_URL=#{hyzUrl}
+           where t1.OPENID=#{openid}
+           when not matched then insert
+           (
+               t1.OPENID,
+               t1.CZTMIS,
+               t1.CZDBM,
+               t1.CZMC,
+               t1.WL_URL,
+               t1.JSQ_URL,
+               t1.HYZ_URL
+           )
+           values
+           (
+               #{openid},
+               #{tms},
+               #{dbm},
+               #{zm},
+               #{wlUrl},
+               #{jsqUrl},
+               #{hyzUrl}
+           )
+
+    </insert>
+
+
+</mapper>

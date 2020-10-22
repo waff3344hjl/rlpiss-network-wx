@@ -3,7 +3,6 @@ package com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.zhwl;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @Description Description
