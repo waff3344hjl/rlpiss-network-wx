@@ -22,7 +22,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 功能描述:
+ * @brief        简要说明
+ * @description  详细说明
+ * @param
+ * @return
+ * @author       hjl
+ * @time         2020/11/25 17:26
+ */
 @RestController
 @Slf4j
 @RequestMapping("/img")

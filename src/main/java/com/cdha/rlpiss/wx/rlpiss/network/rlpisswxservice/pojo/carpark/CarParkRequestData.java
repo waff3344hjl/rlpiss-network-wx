@@ -23,5 +23,4 @@ public class CarParkRequestData implements Serializable {
     private String appkey;//<	车场标识
     private String timestamp;//<	10位时间戳
     private String sign;//<	签名
-
 }

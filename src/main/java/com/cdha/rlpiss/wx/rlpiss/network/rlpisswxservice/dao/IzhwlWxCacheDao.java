@@ -28,4 +28,5 @@ public interface IzhwlWxCacheDao {
      * @return 常用车站信息
      */
     CacheCyczInfo findCacheWxCycz(CacheCyczInfo cyczInfo);
+
 }

@@ -55,7 +55,8 @@ public class CarParkService {
      */
     public CarParkResponseData pushEnterDoorTask(CarParkRequestEnterOrOutDoorInfo data) {
 //        CarParkRequestEnterOrOutDoorInfo data = (CarParkRequestEnterOrOutDoorInfo) data1;
-        log.warn("Hujl--jm===========>" + data.toString());
+        log.warn("Hujl--jm===========>" + data.toString() + "\n" +
+                "Timestamp ：" + data.getTimestamp());
         checkData(data);//<检查参数---进门
         try {
 
@@ -119,8 +120,8 @@ public class CarParkService {
      * @return 是否处理成功
      */
     public CarParkResponseData outDoorTask(CarParkRequestEnterOrOutDoorInfo data) {
-        log.warn("Hujl--cm===========>" + data.toString());
-        checkData(data);//<检查参数---出门
+        log.warn("Hujl--cm===========>" + data.toString() + "\n" +
+                "Timestamp ：" + data.getTimestamp());
         try {
 
 //            CarParkUrl carUrl = dao.getIpByAppkey(data.getAppkey());//根据APPkey查询数据库中对应配置的Appkey  and secretkey
@@ -205,7 +206,8 @@ public class CarParkService {
      * @return 是否处理成功
      */
     public CarParkResponseData pushCarparkInfo(CarParkRequestNowInfo data) {
-        log.warn("Hujl--nowinfo===========>" + data.toString());
+        log.warn("Hujl--nowinfo===========>" + data.toString() + "\n" +
+                "Timestamp ：" + data.getTimestamp());
         checkData(data);//<检查参数
         try {
 

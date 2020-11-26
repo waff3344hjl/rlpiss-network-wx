@@ -5,14 +5,12 @@ import com.cdha.wechatsub.wxtools.util.StringUtils;
 import lombok.Data;
 
 /**
+ * @author xgh
+ * @version 1.0
  * @name ParkingEnterInfoPojo.java
  * @brief 车辆进场信息
- *
  * @des 停车场管理，车辆进场信息
- *
- * @author xgh
  * @date 2020-10-19 13:34
- * @version 1.0
  */
 
 @Data
@@ -51,9 +49,9 @@ public class ParkingEnterInfoPojo {
     public static ParkingEnterInfoPojo toWlData(CarParkRequestEnterOrOutDoorInfo info) {
         ParkingEnterInfoPojo pojo = new ParkingEnterInfoPojo();
         pojo.setId(StringUtils.changNull(info.getId()));//
-        pojo.setAppKey(StringUtils.changNull(info.getAppkey()));//
-        pojo.setEnterTimeStamp(StringUtils.changNull(info.getTimestamp()));//
-        pojo.setSign(StringUtils.changNull(info.getSign()));//
+        pojo.setAppKey(StringUtils.isBlank(info.getAppkey()) ? " appkey is null" : info.getAppkey());//
+        pojo.setEnterTimeStamp(StringUtils.isBlank(info.getTimestamp()) ? "Timestamp is null" : info.getTimestamp());//
+        pojo.setSign(StringUtils.isBlank(info.getSign()) ? " Sign is null" : info.getSign());//
         pojo.setCardID(StringUtils.changNull(info.getCardid()));//
         pojo.setMemberID(StringUtils.changNull(info.getMemberid()));//
         pojo.setMemberType(StringUtils.changNull(info.getMembertype()));//
@@ -65,8 +63,6 @@ public class ParkingEnterInfoPojo {
         pojo.setSubPlace(info.getSubplace());//
         pojo.setImage(StringUtils.changNull(info.getImage()));//
         pojo.setRemark(StringUtils.changNull(info.getRemark()));//
-
-
 
 
         return pojo;

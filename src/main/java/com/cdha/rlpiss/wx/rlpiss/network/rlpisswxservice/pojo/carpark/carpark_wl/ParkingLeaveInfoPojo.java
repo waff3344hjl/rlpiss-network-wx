@@ -54,9 +54,9 @@ public class ParkingLeaveInfoPojo {
     public static ParkingLeaveInfoPojo toWlData(CarParkRequestEnterOrOutDoorInfo info) {
         ParkingLeaveInfoPojo pojo = new ParkingLeaveInfoPojo();
         pojo.setId(StringUtils.changNull(info.getId()));//
-        pojo.setAppKey(StringUtils.changNull(info.getAppkey()));//
-        pojo.setLeaveTime(StringUtils.changNull(info.getTimestamp()));//
-        pojo.setSign(StringUtils.changNull(info.getSign()));//
+        pojo.setAppKey(StringUtils.isBlank(info.getAppkey()) ? " appkey is null" : info.getAppkey());//
+        pojo.setLeaveTimeStamp(StringUtils.isBlank(info.getTimestamp()) ? "Timestamp is null" : info.getTimestamp());//
+        pojo.setSign(StringUtils.isBlank(info.getSign()) ? " Sign is null" : info.getSign());//
         pojo.setCardID(StringUtils.changNull(info.getCardid()));//
         pojo.setMemberID(StringUtils.changNull(info.getMemberid()));//
         pojo.setMemberType(StringUtils.changNull(info.getMembertype()));//
