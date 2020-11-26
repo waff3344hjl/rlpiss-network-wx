@@ -1,12 +1,9 @@
 package com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.controller.rlpissController;
 
-import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.base.BaseDSLYReData;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.base.BaseDSLYRqData;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.base.BaseResponseData;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.pojo.zhwl.CacheCyczInfo;
-import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.service.jiguang_push.bean.PushBean;
 import com.cdha.rlpiss.wx.rlpiss.network.rlpisswxservice.service.wx_cycz_cache.IWxCacheCYHYZ;
-import com.cdha.wechatsub.wxtools.modle.ReturnDataSet;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,7 +36,7 @@ public class WxCacheCYHYZController {
     }
 
     /**
-     * 插入 用户 常用车站信息
+     * 插入 微信公众号用户 常用车站信息
      *
      * @param data 常用车站
      * @return 插入标记
@@ -51,7 +48,7 @@ public class WxCacheCYHYZController {
     }
 
     /**
-     * 用户  获取 缓存的常用车站信息
+     * 微信公众号用户  获取 缓存的常用车站信息
      *
      * @param data 用户信息---openid
      * @return 常用车站信息
@@ -61,5 +58,4 @@ public class WxCacheCYHYZController {
     public BaseResponseData<CacheCyczInfo> getCache(@RequestBody BaseDSLYRqData<CacheCyczInfo> data) {
         return wxCacheService.getCache(data);
     }
-
 }
